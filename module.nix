@@ -40,6 +40,9 @@ in
         load-module module-native-protocol-unix auth-anonymous=1 socket=/tmp/pulse-socket
       '';
     };
+    networking.firewall.allowedUDPPorts = [
+      cfg.port
+    ];
     systemd.services =
       let
         service_template = interface_name:
