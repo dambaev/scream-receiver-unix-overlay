@@ -37,7 +37,7 @@ in
       systemWide = true;
       # allow root to access users's PA session
       extraConfig = ''
-        load-module module-native-protocol-unix auth-anonymous=1 socket=/tmp/pulse-socket
+        load-module module-native-protocol-unix auth-anonymous=1 socket=/tmp/scream-pulse-socket
       '';
     };
     networking.firewall.allowedUDPPorts = [
@@ -57,7 +57,7 @@ in
             requires = [ "pulseaudio.service" ];
             path = with pkgs; [ scream-receiver-unix ];
             script = ''
-                PULSE_SERVER=/tmp/pulse-socket scream -p ${toString cfg.port} -i ${interface_name}
+                PULSE_SERVER=/tmp/scream-pulse-socket scream -p ${toString cfg.port} -i ${interface_name}
             '';
             serviceConfig = {
               Type = "simple";
