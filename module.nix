@@ -40,6 +40,7 @@ in
         load-module module-native-protocol-unix auth-anonymous=1 socket=/tmp/scream-pulse-socket
       '';
     };
+    networking.firewall.checkReversePath = "loose";
     networking.firewall.interfaces =
       let
         fw_interface = item: {
