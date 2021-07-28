@@ -40,9 +40,18 @@ in
         load-module module-native-protocol-unix auth-anonymous=1 socket=/tmp/scream-pulse-socket
       '';
     };
-    networking.firewall.allowedUDPPorts = [
-      cfg.port
-    ];
+    networking.firewall.interfaces =
+      let
+        fw_interface = item: {
+          ${item} = {
+            allowedUDPPorts = [
+              cfg.port
+            ];
+          };
+        }
+        interfaces = lib.foldl' (acc: item: acc // (fw_interface item)) {} cfg.interfaces;
+      in
+        interfaces;
     systemd.services =
       let
         service_template = interface_name:
