@@ -48,7 +48,7 @@ in
               cfg.port
             ];
           };
-        }
+        };
         interfaces = lib.foldl' (acc: item: acc // (fw_interface item)) {} cfg.interfaces;
       in
         interfaces;
